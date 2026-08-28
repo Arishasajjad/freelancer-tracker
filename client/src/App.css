@@ -1,0 +1,3699 @@
+/* =========================================================
+   DESIGN TOKENS
+   Every color, radius, spacing, and font used across the
+   app is driven from here so every page looks the same.
+   No class names below were removed or renamed — only their
+   values were unified — so nothing that JS relies on breaks.
+   ========================================================= */
+ 
+:root {
+  --font-family: Inter, "Segoe UI", Arial, sans-serif;
+ 
+  /* Surfaces */
+  --color-page-bg: #f7f8fc;
+  --color-surface: #ffffff;
+  --color-border: #e8eaf0;
+  --color-border-soft: #f0f1f4;
+ 
+  /* Text */
+  --color-heading: #172033;
+  --color-text: #29283a;
+  --color-muted: #8b91a1;
+  --color-muted-strong: #636a78;
+  --color-placeholder: #aaa7b7;
+ 
+  /* Brand */
+  --color-primary: #635bff;
+  --color-primary-hover: #5148e5;
+  --color-primary-soft: #f0efff;
+  --color-primary-soft-strong: #eeecff;
+  --color-primary-border: #dcd9ff;
+ 
+  /* Status palette (used consistently for every status badge
+     across projects, milestones, invoices, payments, expenses) */
+  --status-planning-bg: #f0efff;
+  --status-planning-text: #635bff;
+ 
+  --status-pending-bg: #fff4df;
+  --status-pending-text: #b87500;
+ 
+  --status-progress-bg: #eaf2ff;
+  --status-progress-text: #2563eb;
+ 
+  --status-success-bg: #eaf8ef;
+  --status-success-text: #269653;
+ 
+  --status-danger-bg: #fff0f0;
+  --status-danger-text: #d14b4b;
+ 
+  --status-neutral-bg: #f1f2f5;
+  --status-neutral-text: #6b7280;
+ 
+  --status-info-bg: #eeeefa;
+  --status-info-text: #6868a8;
+ 
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-pill: 999px;
+ 
+  /* Shadows */
+  --shadow-panel: 0 5px 20px rgba(30, 25, 80, 0.04);
+  --shadow-card-hover: 0 8px 25px rgba(35, 39, 60, 0.07);
+ 
+  /* Layout */
+  --page-max-width: 1100px;
+  --sidebar-width: 250px;
+}
+ 
+/* =========================================================
+   RESET + BASE
+   ========================================================= */
+ 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+ 
+html,
+body,
+body * {
+  font-family: var(--font-family) !important;
+}
+ 
+html {
+  background: var(--color-page-bg) !important;
+}
+ 
+body {
+  background: var(--color-page-bg) !important;
+  color: var(--color-text) !important;
+  font-size: 14px;
+  line-height: 1.5;
+}
+ 
+#root {
+  background: var(--color-page-bg) !important;
+}
+ 
+button,
+a {
+  font-family: inherit;
+}
+ 
+.main h1,
+.main h2,
+.main h3,
+.main h4,
+.main h5,
+.main h6,
+.main p {
+  margin-top: 0;
+  color: var(--color-heading);
+}
+ 
+.main h1 {
+  font-size: 30px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+}
+ 
+.main h2 {
+  font-size: 18px !important;
+  line-height: 1.3 !important;
+  font-weight: 700 !important;
+}
+ 
+.main h3 {
+  font-weight: 600 !important;
+}
+ 
+/* =========================================================
+   APP SHELL
+   ========================================================= */
+ 
+.app {
+  min-height: 100vh;
+  display: flex;
+}
+ 
+/* Sidebar */
+ 
+.sidebar {
+  width: var(--sidebar-width);
+  flex: 0 0 var(--sidebar-width);
+  min-height: 100vh;
+  background: var(--color-surface) !important;
+  border-right: 1px solid var(--color-border) !important;
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+}
+ 
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px 35px;
+}
+ 
+.logo-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 800;
+}
+ 
+.logo h2 {
+  font-size: 17px;
+  color: var(--color-heading);
+}
+ 
+.logo span {
+  font-size: 12px;
+  color: var(--color-muted);
+}
+ 
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+ 
+.nav-item {
+  text-decoration: none;
+  color: #6b7280;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  font-size: 14px;
+  transition: 0.2s;
+}
+ 
+.nav-item span {
+  width: 20px;
+  text-align: center;
+}
+ 
+.nav-item:hover {
+  background: #f4f3ff;
+  color: var(--color-primary);
+}
+ 
+.nav-item.active {
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+ 
+.sidebar-bottom {
+  margin-top: auto;
+}
+ 
+.user-card {
+  border-top: 1px solid #eeeef2;
+  margin-top: 20px;
+  padding: 20px 10px 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+ 
+.avatar {
+  width: 36px;
+  height: 36px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+ 
+.user-card strong {
+  display: block;
+  font-size: 12px;
+}
+ 
+.user-card small {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+ 
+/* Main content column */
+ 
+.main {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  padding: 32px 40px;
+  max-width: none;
+}
+ 
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+ 
+.welcome {
+  color: var(--color-muted);
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+ 
+.topbar h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--color-heading);
+}
+ 
+.profile-button {
+  border: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+ 
+/* =========================================================
+   SHARED: PANELS
+   ========================================================= */
+ 
+.panel,
+.stat-card,
+.page-placeholder,
+.client-form-panel,
+.project-form-panel,
+.projects-list-panel,
+.expense-form-panel,
+.expenses-list-panel,
+.milestone-form-panel,
+.milestones-list-panel,
+.invoice-form-panel,
+.invoices-list-panel,
+.payment-form-panel,
+.payments-list-panel,
+.payments-card,
+.payment-summary-card,
+.settings-panel,
+.documents-panel,
+.project-information-panel,
+.project-milestones-panel,
+.project-detail-card,
+.client-details-page .panel,
+.clients-page .panel,
+.client-info-grid .panel {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-xl) !important;
+  box-shadow: var(--shadow-panel) !important;
+}
+ 
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+ 
+.panel-header h2 {
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+ 
+.panel-header p {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+ 
+.panel {
+  padding: 24px;
+}
+ 
+/* =========================================================
+   SHARED: BUTTONS
+   ========================================================= */
+ 
+.primary-button,
+.primary-btn {
+  border: none;
+  background: var(--color-primary) !important;
+  color: white !important;
+  padding: 11px 18px;
+  min-height: 40px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  transition: 0.2s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+ 
+.primary-button:hover,
+.primary-btn:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+}
+ 
+.primary-button:disabled,
+.primary-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+ 
+.cancel-button {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: #555b6e;
+  padding: 11px 18px;
+  min-height: 40px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+ 
+.cancel-button:hover {
+  background: #f6f7fb;
+}
+ 
+.cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+.edit-button,
+.edit-project-button {
+  border: 1px solid var(--color-primary-border);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+ 
+.edit-button:hover,
+.edit-project-button:hover {
+  background: #ebe9ff;
+}
+ 
+.delete-button,
+.delete-project-button,
+.delete-file-button {
+  border: 1px solid #f0caca;
+  background: #fff6f6;
+  color: #d14b4b;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+ 
+.delete-button:hover,
+.delete-project-button:hover,
+.delete-file-button:hover {
+  background: #ffeaea;
+}
+ 
+.delete-button:disabled,
+.delete-project-button:disabled,
+.delete-file-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+.view-project-button {
+  border: 1px solid var(--color-primary);
+  background: var(--color-surface);
+  color: var(--color-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+ 
+.view-project-button:hover {
+  background: var(--color-primary);
+  color: white;
+}
+ 
+.print-invoice-button {
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  padding: 7px 13px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+ 
+.print-invoice-button:hover {
+  background: #e9e6ff;
+}
+ 
+/* =========================================================
+   SHARED: FORM CONTROLS
+   Every *-form on every page (client, project, expense,
+   milestone, invoice, payment, settings) follows this
+   pattern: a 2-col grid, .form-group / .form-field wrapper,
+   label, input/select/textarea, and .form-buttons row.
+   ========================================================= */
+ 
+.client-form,
+.project-form,
+.expense-form,
+.milestone-form,
+.invoice-form,
+.payment-form,
+.settings-form {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+ 
+.form-group,
+.form-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+ 
+.form-group.full-width,
+.form-field.full-width {
+  grid-column: 1 / -1;
+}
+ 
+.form-group label,
+.form-field label {
+  margin-bottom: 8px;
+  color: var(--color-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+ 
+.main input,
+.main select,
+.main textarea,
+.login-card input,
+.client-form input,
+.client-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #dedce8;
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  padding: 12px 13px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+ 
+.main input,
+.main select {
+  min-height: 44px;
+}
+ 
+.main textarea {
+  resize: vertical;
+  line-height: 1.5;
+}
+ 
+.main input::placeholder,
+.main textarea::placeholder {
+  color: var(--color-placeholder);
+  opacity: 1;
+}
+ 
+.main input:focus,
+.main select:focus,
+.main textarea:focus {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 3px rgba(99, 91, 255, 0.1) !important;
+}
+ 
+.main input:disabled,
+.settings-form input:disabled {
+  background: #f7f6fb;
+  color: var(--color-muted);
+  cursor: not-allowed;
+}
+ 
+.form-buttons {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+ 
+.client-form button {
+  width: fit-content;
+}
+ 
+/* =========================================================
+   SHARED: PAGE WRAPPER
+   Every top-level page (Clients, Projects, Invoices,
+   Payments, Settings, Milestones, Expenses, Details pages)
+   uses the same max-width, padding, and header spacing.
+   ========================================================= */
+ 
+.clients-page,
+.projects-page,
+.expenses-page,
+.milestones-page,
+.invoices-page,
+.payments-page,
+.settings-page,
+.client-details-page,
+.project-details-page,
+.dashboard-page {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: 10px 0 60px;
+  box-sizing: border-box;
+  color: var(--color-text);
+}
+ 
+.page-header,
+.projects-page-header,
+.expenses-page-header,
+.milestones-page-header,
+.invoices-page-header,
+.payments-page-header,
+.payments-header,
+.settings-page-header,
+.client-details-header,
+.project-details-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+ 
+/* Eyebrow label above every page title */
+.projects-eyebrow,
+.expenses-eyebrow,
+.milestones-eyebrow,
+.invoices-eyebrow,
+.payments-eyebrow,
+.settings-eyebrow {
+  margin: 0 0 7px;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+ 
+/* Every page title */
+.page-header h1,
+.projects-page-header h1,
+.expenses-page-header h1,
+.milestones-page-header h1,
+.invoices-page-header h1,
+.payments-page-header h1,
+.payments-header h1,
+.settings-page-header h1,
+.client-details-header h1,
+.project-details-header h1 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--color-heading);
+  letter-spacing: -0.02em;
+}
+ 
+/* Every page subtitle */
+.welcome,
+.page-header p,
+.projects-subtitle,
+.expenses-subtitle,
+.milestones-subtitle,
+.invoices-subtitle,
+.payments-subtitle,
+.settings-subtitle,
+.page-description,
+.client-details-header p,
+.project-details-client {
+  margin: 8px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  font-weight: 400;
+}
+ 
+/* Back buttons */
+.back-button,
+.client-details-page .back-button,
+.clients-page .back-button,
+.project-details-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 0;
+  margin-bottom: 28px;
+  cursor: pointer;
+}
+ 
+.back-button:hover,
+.client-details-page .back-button:hover,
+.clients-page .back-button:hover,
+.project-details-back-button:hover {
+  color: var(--color-primary-hover);
+}
+ 
+/* =========================================================
+   SHARED: COUNT PILLS ("N clients", "N invoices" etc.)
+   ========================================================= */
+ 
+.client-count,
+.project-count,
+.expense-count,
+.milestone-count,
+.invoice-count,
+.payment-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+ 
+/* =========================================================
+   SHARED: STATUS BADGES
+   One consistent color language reused for every kind of
+   status across the app.
+   ========================================================= */
+ 
+.status,
+.status-badge,
+.dashboard-status,
+.project-status .status-badge,
+.milestone-status,
+.expense-status,
+.payment-status,
+.invoice-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+ 
+/* Planning / draft / neutral */
+.status-badge.planning,
+.dashboard-status.planning,
+.planning-status,
+.invoice-status-draft {
+  background: var(--status-planning-bg);
+  color: var(--status-planning-text);
+}
+ 
+/* Pending / waiting */
+.milestone-pending,
+.expense-pending,
+.payment-pending {
+  background: var(--status-pending-bg);
+  color: var(--status-pending-text);
+}
+ 
+/* In progress / sent */
+.status-badge.in-progress,
+.dashboard-status.in-progress,
+.progress-status,
+.milestone-in-progress,
+.invoice-status-sent {
+  background: var(--status-progress-bg);
+  color: var(--status-progress-text);
+}
+ 
+/* Completed / paid / active / success */
+.status-badge.completed,
+.dashboard-status.completed,
+.completed-status,
+.milestone-completed,
+.expense-paid,
+.payment-completed,
+.invoice-status-paid,
+.active-status {
+  background: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+ 
+/* On hold / overdue / failed / danger */
+.status-badge.on-hold,
+.dashboard-status.on-hold,
+.hold-status,
+.milestone-on-hold,
+.payment-failed,
+.invoice-status-overdue {
+  background: var(--status-danger-bg);
+  color: var(--status-danger-text);
+}
+ 
+/* Refunded / info */
+.payment-refunded {
+  background: var(--status-info-bg);
+  color: var(--status-info-text);
+}
+ 
+/* Utility text colors used inline in tables/finance rows */
+.expense-value,
+.negative-value {
+  color: var(--status-danger-text) !important;
+}
+ 
+.pending-value {
+  color: var(--status-pending-text) !important;
+}
+ 
+.positive-value {
+  color: var(--status-success-text) !important;
+}
+ 
+.pending-row strong {
+  color: var(--status-pending-text);
+}
+ 
+/* =========================================================
+   SHARED: EMPTY STATES
+   ========================================================= */
+ 
+.empty-message,
+.projects-empty,
+.expenses-empty,
+.milestones-empty,
+.invoices-empty,
+.payments-empty,
+.project-milestones-empty,
+.dashboard-empty {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 60px 25px;
+}
+ 
+.projects-empty-icon,
+.expenses-empty-icon,
+.milestones-empty-icon,
+.invoices-empty-icon,
+.payments-empty-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+ 
+.projects-empty h3,
+.expenses-empty h3,
+.milestones-empty h3,
+.invoices-empty h3,
+.payments-empty h3,
+.project-milestones-empty h3 {
+  margin: 0 0 6px;
+  color: var(--color-heading);
+  font-size: 17px;
+}
+ 
+.projects-empty p,
+.expenses-empty p,
+.milestones-empty p,
+.invoices-empty p,
+.payments-empty p,
+.project-milestones-empty p {
+  margin: 0 0 18px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+ 
+/* =========================================================
+   SHARED: LIST ROW PATTERN
+   Used by projects, milestones, payments, expenses.
+   icon | main info | meta columns | status + actions
+   ========================================================= */
+ 
+.project-row,
+.milestone-row,
+.payment-row,
+.expense-row {
+  display: grid;
+  grid-template-columns: 46px minmax(200px, 1.6fr) 130px 130px 170px;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.project-row:last-child,
+.milestone-row:last-child,
+.payment-row:last-child,
+.expense-row:last-child {
+  border-bottom: none;
+}
+ 
+.project-row:hover,
+.milestone-row:hover,
+.payment-row:hover,
+.expense-row:hover {
+  background: #faf9ff;
+}
+ 
+.project-icon,
+.milestone-icon,
+.payment-icon,
+.expense-icon,
+.invoice-icon,
+.project-details-icon,
+.project-milestone-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+}
+ 
+.project-main-info,
+.milestone-main-info,
+.payment-main-info,
+.expense-main-info {
+  min-width: 0;
+}
+ 
+.project-main-info h3,
+.milestone-main-info h3,
+.payment-main-info h3,
+.expense-main-info h3 {
+  margin: 0 0 5px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.project-client,
+.milestone-project,
+.milestone-client,
+.milestone-company,
+.payment-client,
+.payment-project,
+.expense-main-info p {
+  margin: 0 0 4px;
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+ 
+.project-description,
+.milestone-description,
+.expense-main-info small {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.project-meta,
+.milestone-meta,
+.payment-meta,
+.expense-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+ 
+.project-meta span,
+.milestone-meta span,
+.payment-meta span,
+.expense-meta span {
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+ 
+.project-meta strong,
+.milestone-meta strong,
+.payment-meta strong,
+.expense-meta strong {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+ 
+.project-actions,
+.milestone-actions,
+.payment-actions,
+.expense-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 12px;
+}
+ 
+.project-status,
+.milestone-status,
+.payment-status,
+.expense-status {
+  display: inline-flex;
+}
+ 
+.project-buttons,
+.milestone-buttons,
+.payment-buttons,
+.expense-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+ 
+/* =========================================================
+   LOGIN PAGE
+   ========================================================= */
+ 
+.login-page {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--color-page-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+ 
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  box-shadow: 0 15px 40px rgba(30, 41, 59, 0.06);
+}
+ 
+.login-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 800;
+  margin-bottom: 22px;
+}
+ 
+.login-card h1 {
+  font-size: 27px;
+  color: var(--color-heading);
+  margin-bottom: 7px;
+}
+ 
+.login-subtitle {
+  color: var(--color-muted);
+  font-size: 13px;
+  margin-bottom: 28px;
+}
+ 
+.login-card form {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.login-card label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 7px;
+}
+ 
+.login-card input {
+  margin-bottom: 18px;
+}
+ 
+.login-button {
+  border: none;
+  background: var(--color-primary);
+  color: white;
+  padding: 13px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 5px;
+}
+ 
+.login-button:hover {
+  opacity: 0.92;
+}
+ 
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+ 
+.login-error {
+  background: #fff1f1;
+  border: 1px solid #ffd6d6;
+  color: #c03939;
+  padding: 11px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+ 
+/* =========================================================
+   DASHBOARD (home)
+   ========================================================= */
+ 
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 22px;
+}
+ 
+.stat-card {
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+ 
+.stat-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+ 
+.stat-card p {
+  color: var(--color-muted);
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+ 
+.stat-card h2 {
+  font-size: 21px;
+  color: var(--color-heading);
+}
+ 
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+}
+ 
+.project-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border-soft);
+}
+ 
+.project-info {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+ 
+.project-info h3 {
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+ 
+.project-info p {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+ 
+.project-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+ 
+.project-right strong {
+  font-size: 13px;
+}
+ 
+.finance-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+  font-size: 13px;
+}
+ 
+.finance-row span {
+  color: var(--color-muted-strong);
+}
+ 
+.finance-row strong {
+  color: var(--color-heading);
+}
+ 
+.pending-row {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+ 
+.dashboard-error {
+  margin: 0 0 20px;
+  padding: 12px 15px;
+  border: 1px solid #ffd5d5;
+  border-radius: var(--radius-md);
+  background: #fff4f4;
+  color: #d34f4f;
+  font-size: 13px;
+}
+ 
+.dashboard-projects-list .project-item {
+  padding: 17px 0;
+}
+ 
+/* =========================================================
+   PAGE PLACEHOLDER (loading / not-yet-built pages)
+   ========================================================= */
+ 
+.page-placeholder {
+  padding: 35px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-muted);
+}
+ 
+.page-placeholder h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  color: var(--color-heading);
+}
+ 
+.page-placeholder p {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+ 
+/* =========================================================
+   CLIENTS
+   ========================================================= */
+ 
+.clients-list,
+.projects-list,
+.dashboard-projects-list {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.client-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 0;
+  border-top: 1px solid var(--color-border-soft);
+}
+ 
+.client-avatar,
+.client-big-avatar {
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+ 
+.client-avatar {
+  width: 43px;
+  height: 43px;
+}
+ 
+.client-big-avatar {
+  width: 68px;
+  height: 68px;
+  min-width: 68px;
+  border-radius: var(--radius-lg);
+  font-size: 28px;
+}
+ 
+.client-details {
+  flex: 1;
+}
+ 
+.client-details h3 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+ 
+.client-details p {
+  font-size: 12px;
+  color: var(--color-muted-strong);
+  margin-bottom: 3px;
+}
+ 
+.client-details small {
+  font-size: 11px;
+  color: var(--color-muted);
+}
+ 
+.client-contact {
+  color: var(--color-muted-strong);
+  font-size: 12px;
+}
+ 
+.client-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+ 
+/* Client search */
+ 
+.client-search-container {
+  margin: 20px 0;
+}
+ 
+.client-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 420px;
+}
+ 
+.client-search-box input {
+  padding: 0 42px;
+}
+ 
+.search-icon {
+  position: absolute;
+  left: 14px;
+  font-size: 16px;
+  pointer-events: none;
+}
+ 
+.clear-search {
+  position: absolute;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+ 
+.clear-search:hover {
+  color: var(--color-text);
+}
+ 
+/* =========================================================
+   CLIENT DETAILS
+   ========================================================= */
+ 
+.client-details-header,
+.clients-page .client-details-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+ 
+.client-info-grid,
+.clients-page .client-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+ 
+.client-info-grid .panel,
+.clients-page .client-info-grid .panel {
+  min-height: 220px;
+  padding: 26px;
+}
+ 
+.client-info-grid .panel h2,
+.clients-page .client-info-grid .panel h2 {
+  margin: 0 0 24px;
+}
+ 
+.info-row,
+.clients-page .info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.info-row:last-child,
+.clients-page .info-row:last-child {
+  border-bottom: none;
+}
+ 
+.info-row span,
+.clients-page .info-row span {
+  color: var(--color-muted);
+  font-size: 14px;
+}
+ 
+.info-row strong,
+.clients-page .info-row strong {
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+}
+ 
+.notes-text,
+.clients-page .notes-text {
+  color: var(--color-muted-strong);
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+ 
+/* Documents */
+ 
+.documents-panel,
+.clients-page .documents-panel {
+  padding: 26px;
+  margin-top: 22px;
+}
+ 
+.documents-panel .panel-header,
+.clients-page .documents-panel .panel-header {
+  margin-bottom: 24px;
+}
+ 
+.documents-empty,
+.clients-page .documents-empty {
+  min-height: 130px;
+  border: 1px dashed var(--color-primary-border);
+  border-radius: var(--radius-lg);
+  background: #faf9ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+ 
+.documents-empty p,
+.clients-page .documents-empty p {
+  margin: 0 0 8px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+}
+ 
+.documents-empty small,
+.clients-page .documents-empty small {
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+ 
+.documents-list,
+.clients-page .documents-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+ 
+.document-card,
+.document-item,
+.clients-page .document-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  transition: 0.2s ease;
+  min-width: 0;
+}
+ 
+.document-card:hover,
+.document-item:hover,
+.clients-page .document-item:hover {
+  border-color: var(--color-primary-border);
+  box-shadow: var(--shadow-card-hover);
+}
+ 
+.document-preview,
+.clients-page .document-preview {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-primary-soft-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+ 
+.document-image,
+.clients-page .document-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+ 
+.document-icon,
+.clients-page .document-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+ 
+.document-info,
+.clients-page .document-info {
+  flex: 1;
+  min-width: 0;
+}
+ 
+.document-info h3,
+.clients-page .document-info h3 {
+  margin: 0 0 5px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+ 
+.document-info p,
+.document-info small,
+.clients-page .document-info small {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+ 
+.document-open-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+ 
+.document-open-button:hover {
+  background: #eeeaff;
+}
+ 
+.document-actions,
+.clients-page .document-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+ 
+/* =========================================================
+   PROJECTS LIST + PROJECT ROW (grid header layout)
+   ========================================================= */
+ 
+.project-row {
+  grid-template-columns: 46px minmax(220px, 1.7fr) 120px 130px minmax(180px, auto);
+}
+ 
+/* =========================================================
+   MILESTONES LIST
+   ========================================================= */
+ 
+.milestone-row {
+  grid-template-columns: 44px minmax(220px, 1fr) 150px 150px 190px;
+}
+ 
+.milestone-project,
+.milestone-client,
+.milestone-company {
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+ 
+.project-milestones-preview {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--color-border-soft);
+}
+ 
+.project-milestones-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-muted-strong);
+  margin-bottom: 8px;
+}
+ 
+.project-milestones-preview .project-milestones-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+ 
+.project-milestone-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft);
+  border: 1px solid var(--color-primary-border);
+}
+ 
+.project-milestone-check {
+  width: 21px;
+  height: 21px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 700;
+}
+ 
+.project-milestone-item strong {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+ 
+.project-milestone-item small {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  color: var(--color-muted);
+}
+ 
+/* =========================================================
+   EXPENSES
+   ========================================================= */
+ 
+.expense-row {
+  grid-template-columns: 46px minmax(190px, 1.7fr) 120px 120px 130px minmax(150px, auto);
+}
+ 
+/* =========================================================
+   INVOICES
+   ========================================================= */
+ 
+.invoices-list {
+  padding: 5px 26px 10px;
+}
+ 
+.invoice-card {
+  padding: 23px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.invoice-card:last-child {
+  border-bottom: none;
+}
+ 
+.invoice-card:hover {
+  box-shadow: none;
+}
+ 
+.invoice-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+ 
+.invoice-number-area {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+ 
+.invoice-number-area h3 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 16px;
+}
+ 
+.invoice-number-area p {
+  margin: 4px 0 0;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+ 
+.invoice-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 18px 0;
+  border-top: 1px solid var(--color-border-soft);
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.invoice-detail {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+ 
+.invoice-detail span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+ 
+.invoice-detail strong {
+  display: block;
+  color: var(--color-text);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ 
+.invoice-detail small {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-muted);
+  font-size: 11px;
+}
+ 
+.invoice-detail.invoice-amount strong,
+.invoice-amount strong {
+  color: var(--color-primary);
+  font-size: 15px;
+}
+ 
+.invoice-notes {
+  margin-top: 15px;
+  padding: 12px 15px;
+  border-radius: var(--radius-md);
+  background: #f8f8fc;
+}
+ 
+.invoice-notes span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--color-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+ 
+.invoice-notes p {
+  margin: 0;
+  color: var(--color-muted-strong);
+  font-size: 13px;
+}
+ 
+.invoice-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+}
+ 
+.invoice-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.invoice-filter-bar label {
+  color: var(--color-muted-strong);
+  font-size: 13px;
+  font-weight: 600;
+}
+ 
+/* =========================================================
+   PAYMENTS
+   ========================================================= */
+ 
+.payments-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+ 
+.payment-summary-card {
+  padding: 22px;
+}
+ 
+.payment-summary-card span {
+  display: block;
+  color: var(--color-muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+ 
+.payment-summary-card strong {
+  color: var(--color-heading);
+  font-size: 24px;
+  font-weight: 700;
+}
+ 
+.payments-card {
+  min-height: 320px;
+  overflow: hidden;
+}
+ 
+.payments-card-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.payments-card-header h2 {
+  margin: 0;
+}
+ 
+.payments-list {
+  padding: 10px 24px;
+}
+ 
+.payment-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.payment-item:last-child {
+  border-bottom: none;
+}
+ 
+.payment-item h3 {
+  margin: 0 0 5px;
+  color: var(--color-heading);
+  font-size: 15px;
+}
+ 
+.payment-item p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+ 
+.payment-item strong {
+  color: var(--color-heading);
+  font-size: 16px;
+}
+ 
+.payment-row {
+  grid-template-columns: 44px minmax(180px, 1.5fr) 130px 125px 145px 130px;
+}
+ 
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+ 
+.settings-panel {
+  padding: 28px;
+}
+ 
+.settings-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-bottom: 24px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.settings-avatar {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  font-size: 21px;
+  font-weight: 750;
+}
+ 
+.settings-panel-header h2 {
+  margin: 0 0 5px;
+}
+ 
+.settings-panel-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+ 
+.settings-form input,
+.settings-form select {
+  min-height: 44px;
+}
+ 
+.settings-success,
+.settings-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+ 
+.settings-success {
+  background: var(--status-success-bg);
+  color: var(--status-success-text);
+}
+ 
+.settings-error {
+  background: var(--status-danger-bg);
+  color: var(--status-danger-text);
+}
+ 
+.settings-form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+}
+ 
+/* =========================================================
+   PROJECT DETAILS PAGE
+   ========================================================= */
+ 
+.project-details-title-area {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+ 
+.project-details-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-lg);
+  font-size: 22px;
+}
+ 
+.project-details-actions {
+  display: flex;
+  align-items: center;
+}
+ 
+.project-information-panel,
+.project-milestones-panel {
+  margin-bottom: 24px;
+}
+ 
+.project-details-section-title,
+.project-milestones-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 25px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.project-details-section-title h2,
+.project-milestones-header h2 {
+  margin: 0 0 5px;
+  font-size: 18px;
+}
+ 
+.project-details-section-title p,
+.project-milestones-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+ 
+.project-information-grid,
+.project-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 25px;
+}
+ 
+.project-information-item,
+.project-detail-card {
+  padding: 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-page-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+ 
+.project-information-item span,
+.project-detail-card span,
+.project-milestone-meta span {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+ 
+.project-information-item strong,
+.project-detail-card strong {
+  display: block;
+  color: var(--color-heading);
+  font-size: 15px;
+}
+ 
+.project-description-section {
+  padding: 20px 25px;
+  border-top: 1px solid var(--color-border-soft);
+}
+ 
+.project-description-section > span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--color-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+ 
+.project-description-section p {
+  margin: 0;
+  color: var(--color-muted-strong);
+  line-height: 1.7;
+  font-size: 14px;
+}
+ 
+.project-milestones-list,
+.project-milestone-row {
+  width: 100%;
+}
+ 
+.project-milestone-row {
+  display: grid;
+  grid-template-columns: 45px minmax(220px, 1fr) 150px 150px 130px;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 25px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+ 
+.project-milestone-row:last-child {
+  border-bottom: none;
+}
+ 
+.project-milestone-main {
+  min-width: 0;
+}
+ 
+.project-milestone-main h3 {
+  margin: 0 0 5px;
+  color: var(--color-heading);
+  font-size: 15px;
+}
+ 
+.project-milestone-main p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+ 
+.project-milestone-meta {
+  display: flex;
+  gap: 28px;
+}
+ 
+.project-milestone-meta > div {
+  min-width: 100px;
+}
+ 
+.project-milestone-meta strong {
+  color: var(--color-heading);
+  font-size: 13px;
+}
+ 
+.project-milestone-status {
+  display: flex;
+  justify-content: flex-end;
+}
+ 
+.milestones-details-loading {
+  padding: 60px 20px;
+  text-align: center;
+  color: var(--color-muted);
+}
+ 
+/* =========================================================
+   RESPONSIVE
+   Consolidated into a consistent set of breakpoints used
+   everywhere: 1050px (tablet), 850px (narrow tablet),
+   700px (mobile), 550px (small mobile).
+   ========================================================= */
+ 
+@media (max-width: 1050px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+ 
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .project-row,
+  .milestone-row {
+    grid-template-columns: 44px minmax(180px, 1fr) 110px 130px;
+  }
+ 
+  .payment-row {
+    grid-template-columns: 44px minmax(180px, 1fr) 120px 120px;
+  }
+ 
+  .expense-row {
+    grid-template-columns: 46px minmax(180px, 1fr) 120px 120px;
+  }
+ 
+  .project-actions,
+  .milestone-actions,
+  .payment-actions,
+  .expense-actions {
+    grid-column: 2 / -1;
+    align-items: flex-start;
+    margin-top: 4px;
+  }
+ 
+  .payment-meta:nth-of-type(2),
+  .payment-meta:nth-of-type(3),
+  .expense-meta:nth-of-type(2) {
+    display: none;
+  }
+ 
+  .invoice-details-grid,
+  .project-information-grid,
+  .project-details-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+ 
+@media (max-width: 850px) {
+  .sidebar {
+    width: 70px;
+    flex: 0 0 70px;
+    padding: 20px 10px;
+  }
+ 
+  .logo h2,
+  .logo span,
+  .nav-item:not(.active) {
+    display: none;
+  }
+ 
+  .nav-item {
+    justify-content: center;
+  }
+ 
+  .user-card {
+    display: none;
+  }
+ 
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .page-header,
+  .projects-page-header,
+  .expenses-page-header,
+  .milestones-page-header,
+  .invoices-page-header,
+  .payments-page-header,
+  .payments-header,
+  .client-details-header,
+  .project-details-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+ 
+  .payments-summary {
+    grid-template-columns: 1fr;
+  }
+}
+ 
+@media (max-width: 700px) {
+  .main {
+    padding: 24px 18px 40px;
+  }
+ 
+  .main h1,
+  .topbar h1 {
+    font-size: 26px !important;
+  }
+ 
+  .clients-page,
+  .projects-page,
+  .expenses-page,
+  .milestones-page,
+  .invoices-page,
+  .payments-page,
+  .settings-page,
+  .client-details-page,
+  .project-details-page {
+    max-width: 100%;
+  }
+ 
+  .client-form,
+  .project-form,
+  .expense-form,
+  .milestone-form,
+  .invoice-form,
+  .payment-form,
+  .settings-form {
+    grid-template-columns: 1fr;
+  }
+ 
+  .form-group.full-width,
+  .form-field.full-width {
+    grid-column: auto;
+  }
+ 
+  .form-buttons {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+ 
+  .form-buttons button {
+    width: 100%;
+  }
+ 
+  .client-info-grid,
+  .clients-page .client-info-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .documents-list,
+  .clients-page .documents-list {
+    grid-template-columns: 1fr;
+  }
+ 
+  .project-row,
+  .milestone-row,
+  .payment-row,
+  .expense-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 14px;
+  }
+ 
+  .project-main-info,
+  .milestone-main-info,
+  .payment-main-info,
+  .expense-main-info {
+    flex: 1;
+    min-width: calc(100% - 65px);
+  }
+ 
+  .project-meta,
+  .milestone-meta,
+  .payment-meta,
+  .expense-meta {
+    flex: 1;
+    min-width: 120px;
+  }
+ 
+  .project-actions,
+  .milestone-actions,
+  .payment-actions,
+  .expense-actions {
+    width: 100%;
+    align-items: flex-start;
+  }
+ 
+  .invoice-details-grid,
+  .project-information-grid,
+  .project-details-grid {
+    grid-template-columns: 1fr;
+  }
+ 
+  .invoice-card-top,
+  .invoice-filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+ 
+  .invoice-filter-bar select {
+    width: 100%;
+  }
+ 
+  .project-milestone-row {
+    grid-template-columns: 40px 1fr;
+  }
+ 
+  .project-milestone-meta,
+  .project-milestone-status {
+    grid-column: 2;
+  }
+}
+ 
+@media (max-width: 550px) {
+  .projects-page-header h1,
+  .invoices-page-header h1,
+  .payments-page-header h1,
+  .payments-header h1,
+  .settings-page-header h1 {
+    font-size: 26px;
+  }
+ 
+  .client-big-avatar {
+    width: 56px;
+    height: 56px;
+    min-width: 56px;
+    font-size: 23px;
+  }
+ 
+  .client-details-header h1,
+  .project-details-header h1 {
+    font-size: 24px;
+  }
+ 
+  .documents-panel .panel-header,
+  .clients-page .documents-panel .panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+ 
+  .documents-panel .primary-button {
+    width: 100%;
+  }
+ 
+  .info-row,
+  .clients-page .info-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+ 
+  .info-row strong,
+  .clients-page .info-row strong {
+    text-align: left;
+  }
+}
+
+/* =========================================================
+   CLIENT DETAILS PAGE - COMPLETE DESIGN
+   ========================================================= */
+
+/* =========================================================
+   PAGE CONTAINER
+   ========================================================= */
+
+.clients-page {
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
+  padding: 10px 20px 70px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+   ========================================================= */
+
+.client-details-header + .client-stats-grid {
+  margin-top: 0;
+}
+
+.clients-page .back-button {
+  margin-bottom: 22px;
+}
+
+
+/* =========================================================
+   CLIENT HEADER
+   ========================================================= */
+
+.client-details-header,
+.clients-page .client-details-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+  padding: 26px 28px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.client-big-avatar {
+  width: 68px;
+  height: 68px;
+  min-width: 68px;
+  border-radius: 20px;
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.client-details-header h1 {
+  margin: 0 0 5px;
+  color: var(--color-text);
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.client-details-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
+
+.client-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.client-stat-card {
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  min-width: 0;
+}
+
+.client-stat-card .stat-label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.client-stat-card .stat-value {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--color-text);
+  font-size: 22px;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.client-stat-card small {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   GENERAL PANELS
+   ========================================================= */
+
+.clients-page > .panel {
+  margin-bottom: 22px;
+}
+
+.clients-page .panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+
+/* =========================================================
+   CONTACT + NOTES
+   ========================================================= */
+
+.client-info-grid,
+.clients-page .client-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.client-info-grid .panel,
+.clients-page .client-info-grid .panel {
+  min-height: 210px;
+  padding: 26px;
+}
+
+.client-info-grid .panel h2,
+.clients-page .client-info-grid .panel h2 {
+  margin: 0 0 18px;
+  color: var(--color-text);
+  font-size: 18px;
+}
+
+.info-row,
+.clients-page .info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.info-row:last-child,
+.clients-page .info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row span,
+.clients-page .info-row span {
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.info-row strong,
+.clients-page .info-row strong {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: right;
+  word-break: break-word;
+}
+
+.notes-text,
+.clients-page .notes-text {
+  margin: 0;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   PANEL HEADER
+   ========================================================= */
+
+.clients-page .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px 26px;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.clients-page .panel-header h2 {
+  margin: 0 0 5px;
+  color: var(--color-text);
+  font-size: 18px;
+}
+
+.clients-page .panel-header p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.client-count {
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PROJECTS SECTION
+   ========================================================= */
+
+.client-projects-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-project-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.7fr) 130px 130px 140px;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 26px;
+  border-bottom: 1px solid var(--color-border-soft);
+  transition: background 0.2s ease;
+}
+
+.client-project-row:last-child {
+  border-bottom: none;
+}
+
+.client-project-row:hover {
+  background: var(--color-primary-soft);
+}
+
+.client-project-row h3 {
+  margin: 0 0 6px;
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.client-project-row > div:first-child p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.project-info span {
+  color: var(--color-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.project-info strong {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   PROJECT STATUS
+   ========================================================= */
+
+.project-info:first-of-type strong {
+  display: inline-flex;
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   INVOICES
+   ========================================================= */
+
+.client-invoices-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.client-invoice-row {
+  display: grid;
+  grid-template-columns: minmax(200px, 1.5fr) 120px 120px 130px 90px;
+  align-items: center;
+  gap: 18px;
+  padding: 20px 26px;
+  border-bottom: 1px solid var(--color-border-soft);
+  transition: background 0.2s ease;
+}
+
+.client-invoice-row:last-child {
+  border-bottom: none;
+}
+
+.client-invoice-row:hover {
+  background: var(--color-primary-soft);
+}
+
+.client-invoice-row h3 {
+  margin: 0 0 5px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.client-invoice-row > div:first-child p {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.invoice-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.invoice-info span {
+  color: var(--color-muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.invoice-info strong {
+  color: var(--color-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.invoice-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.status-paid {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #a16207;
+}
+
+.status-overdue {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.status-draft {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+.empty-message {
+  padding: 30px 26px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+
+.documents-empty {
+  min-height: 130px;
+  margin: 0;
+  border: 1px dashed var(--color-primary-border);
+  border-radius: var(--radius-lg);
+  background: #faf9ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 25px;
+}
+
+.documents-empty p {
+  margin: 0 0 8px;
+  color: var(--color-muted-strong);
+  font-size: 14px;
+}
+
+.documents-empty small {
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   DOCUMENTS
+   ========================================================= */
+
+.documents-panel,
+.clients-page .documents-panel {
+  padding: 0;
+  margin-top: 22px;
+}
+
+.documents-panel .panel-header,
+.clients-page .documents-panel .panel-header {
+  margin-bottom: 0;
+}
+
+.documents-panel > .documents-empty,
+.documents-panel > .documents-list {
+  margin: 24px 26px 26px;
+}
+
+.documents-list,
+.clients-page .documents-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.document-card,
+.document-item,
+.clients-page .document-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  transition: 0.2s ease;
+  min-width: 0;
+}
+
+.document-card:hover,
+.document-item:hover,
+.clients-page .document-item:hover {
+  border-color: var(--color-primary-border);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.document-preview,
+.clients-page .document-preview {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-primary-soft-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.document-image,
+.clients-page .document-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.document-icon,
+.clients-page .document-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary-soft-strong);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.document-info,
+.clients-page .document-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.document-info h3,
+.clients-page .document-info h3 {
+  margin: 0 0 5px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.document-info small {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+
+.document-actions,
+.clients-page .document-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.document-actions a,
+.document-open-button,
+.edit-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border: 1px solid var(--color-primary-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.document-actions a:hover,
+.document-open-button:hover,
+.edit-button:hover {
+  background: #eeeaff;
+}
+
+.delete-button {
+  padding: 8px 12px;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-sm);
+  background: #fff1f2;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background: #fee2e2;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .client-stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .client-project-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .client-invoice-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .documents-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .clients-page {
+    padding: 10px 14px 50px;
+  }
+
+  .client-details-header {
+    padding: 20px;
+  }
+
+  .client-big-avatar {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    border-radius: 16px;
+    font-size: 21px;
+  }
+
+  .client-details-header h1 {
+    font-size: 22px;
+  }
+
+  .client-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .client-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .client-project-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .client-invoice-row {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .documents-list {
+    grid-template-columns: 1fr;
+  }
+
+  .clients-page .panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .document-item {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .document-actions {
+    width: 100%;
+  }
+}
+/* =========================================================
+   CLICKABLE CLIENT PROJECTS
+   ========================================================= */
+
+.clickable-project {
+  cursor: pointer;
+}
+
+.clickable-project:hover {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary-border);
+  transform: translateY(-1px);
+}
+
+.clickable-project h3 {
+  transition: color 0.2s ease;
+}
+
+.clickable-project:hover h3 {
+  color: var(--color-primary);
+}
+/* =========================================================
+   PROJECT DETAILS PAGE
+   ========================================================= */
+
+.project-details-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 20px 60px;
+}
+
+
+/* =========================================================
+   PROJECT HEADER
+   ========================================================= */
+
+.project-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.project-details-title-area {
+  min-width: 0;
+}
+
+.project-details-header h1 {
+  margin: 5px 0 10px;
+  color: var(--color-text);
+  font-size: 32px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.project-details-header .projects-subtitle {
+  max-width: 700px;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   PROJECT INFORMATION GRID
+   ========================================================= */
+
+.project-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.project-detail-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 105px;
+  padding: 20px;
+}
+
+.project-detail-icon {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--color-primary-soft);
+  font-size: 20px;
+}
+
+.project-detail-content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.project-detail-content span {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.project-detail-content strong {
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 650;
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   MILESTONES CARD
+   ========================================================= */
+
+.project-milestones-card {
+  margin-top: 24px;
+  padding: 0;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   MILESTONES TOP
+   ========================================================= */
+
+.milestones-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 28px;
+}
+
+.milestones-icon-wrapper {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: var(--color-primary-soft);
+  font-size: 25px;
+}
+
+.milestones-heading {
+  flex: 1;
+  min-width: 0;
+}
+
+.milestones-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.milestones-eyebrow {
+  margin: 0 0 5px;
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.milestones-heading h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 21px;
+  font-weight: 700;
+}
+
+.milestones-description {
+  max-width: 700px;
+  margin: 9px 0 0;
+  color: var(--color-muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.milestones-count {
+  flex-shrink: 0;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   MILESTONES DIVIDER
+   ========================================================= */
+
+.milestones-divider {
+  height: 1px;
+  background: var(--color-border-soft);
+}
+
+
+/* =========================================================
+   MILESTONES ACTION AREA
+   ========================================================= */
+
+.milestones-action-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 22px 28px;
+  background: var(--color-surface);
+}
+
+.milestones-action-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.milestones-action-text strong {
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.milestones-action-text span {
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   VIEW MILESTONES BUTTON
+   ========================================================= */
+
+.view-milestones-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 11px 17px;
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.view-milestones-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.milestone-arrow {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+}
+
+.view-milestones-button:hover .milestone-arrow {
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .project-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .project-details-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .project-details-page {
+    padding: 10px 15px 40px;
+  }
+
+  .project-details-header h1 {
+    font-size: 26px;
+  }
+
+  .project-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .milestones-top {
+    padding: 22px;
+  }
+
+  .milestones-title-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .milestones-action-area {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 20px 22px;
+  }
+
+  .view-milestones-button {
+    width: 100%;
+  }
+
+}
+/* =========================================================
+   MILESTONE DETAILS PAGE
+   ========================================================= */
+
+.milestone-details-page {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 20px 60px;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.milestone-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  margin: 25px 0 30px;
+  padding: 30px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.milestone-details-title {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.milestone-details-title h1 {
+  margin: 3px 0 8px;
+  color: var(--color-text);
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.milestone-details-title .milestones-subtitle {
+  margin: 0;
+}
+
+.milestone-details-icon {
+  width: 58px;
+  height: 58px;
+  min-width: 58px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.milestone-status.large {
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   INFORMATION GRID
+   ========================================================= */
+
+.milestone-details-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.milestone-detail-card {
+  padding: 22px;
+  min-height: 115px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.milestone-detail-card span {
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.milestone-detail-card strong {
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   DESCRIPTION
+   ========================================================= */
+
+.milestone-description-card {
+  padding: 28px;
+  margin-bottom: 22px;
+}
+
+.milestone-section-heading {
+  margin-bottom: 18px;
+}
+
+.milestone-section-heading h2 {
+  margin: 3px 0 0;
+  color: var(--color-text);
+  font-size: 20px;
+}
+
+.milestone-description-box {
+  padding: 20px;
+  border: 1px solid var(--color-border-soft);
+  border-radius: var(--radius-md);
+  background: var(--color-background);
+}
+
+.milestone-description-box p {
+  margin: 0;
+  color: var(--color-muted-strong);
+  font-size: 15px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.milestone-details-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .milestone-details-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .milestone-details-header {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 650px) {
+  .milestone-details-page {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .milestone-details-header {
+    flex-direction: column;
+    padding: 22px;
+  }
+
+  .milestone-details-title h1 {
+    font-size: 24px;
+  }
+
+  .milestone-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .milestone-details-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .milestone-details-actions button {
+    width: 100%;
+  }
+}
+/* =========================================================
+   REGISTER PAGE
+   ========================================================= */
+
+.login-register-text {
+  margin: 18px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+.login-register-link {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.login-register-link:hover {
+  opacity: 0.75;
+}
+
+
+/* =========================================================
+   REGISTER / LOGIN CARD IMPROVEMENTS
+   ========================================================= */
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  border-radius: 18px;
+}
+
+
+/* REGISTER FORM SPACING */
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-card form label {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.login-card form input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+/* REGISTER BUTTON */
+
+.login-button {
+  margin-top: 12px;
+}
+
+
+/* ERROR MESSAGE */
+
+.login-error {
+  margin-bottom: 16px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .login-card {
+    max-width: calc(100% - 32px);
+    padding: 30px 24px;
+  }
+}
