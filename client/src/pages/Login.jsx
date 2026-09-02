@@ -27,7 +27,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        'https://freelancer-tracker-pn21.onrender.com',
+        'https://freelancer-tracker-pn21.onrender.com/api/auth/login',
         {
           method: 'POST',
           headers: {
@@ -57,6 +57,8 @@ function Login() {
       navigate('/');
 
     } catch (error) {
+      console.error('Login error:', error);
+
       setError(
         'Cannot connect to server. Make sure the backend is running.'
       );
@@ -120,9 +122,9 @@ function Login() {
 
         </form>
 
-        {/* REGISTER LINK */}
         <p className="login-register-text">
           Don't have an account?{' '}
+
           <button
             type="button"
             className="login-register-link"
