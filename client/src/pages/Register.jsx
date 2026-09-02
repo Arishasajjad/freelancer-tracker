@@ -28,7 +28,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        'http://localhost:5000/api/auth/register',
+        'https://freelancer-tracker-pn21.onrender.com',
         {
           method: 'POST',
           headers: {

@@ -27,7 +27,7 @@ function Login() {
 
     try {
       const response = await fetch(
-        'http://localhost:5000/api/auth/login',
+        'https://freelancer-tracker-pn21.onrender.com',
         {
           method: 'POST',
           headers: {
