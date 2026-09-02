@@ -48,8 +48,7 @@ function Dashboard() {
         setLoading(true);
         setError('');
 
-        const response = await fetch(
-          `${API_URL}/dashboard`,
+        const response = await fetch(`${API_URL}/api/dashboard`,
           {
             headers: {
               Authorization: `Bearer ${token}`
