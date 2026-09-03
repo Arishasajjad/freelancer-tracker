@@ -22,7 +22,7 @@ import ProjectDetails from './pages/ProjectDetails';
 import MilestoneDetails from './pages/MilestoneDetails';
 
 
-const API_URL = 'https://freelancer-tracker-pn21.onrender.com';
+const API_URL = 'https://freelancer-tracker-pn21.onrender.com/api';
 
 function App() {
   const [profile, setProfile] = useState({

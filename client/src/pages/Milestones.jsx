@@ -4,8 +4,7 @@ import {
   useParams
 } from 'react-router-dom';
 
-const API_URL = 'https://freelancer-tracker-pn21.onrender.com';
-
+const API_URL = 'https://freelancer-tracker-pn21.onrender.com/api';
 const emptyForm = {
   project: '',
   title: '',

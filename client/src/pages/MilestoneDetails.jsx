@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const API_URL = 'https://freelancer-tracker-pn21.onrender.com';
+const API_URL = 'https://freelancer-tracker-pn21.onrender.com/api';
 
 function MilestoneDetails() {
   const { milestoneId } = useParams();
