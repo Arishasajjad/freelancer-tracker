@@ -1,45 +1,11 @@
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
 
 const API_URL = 'https://freelancer-tracker-pn21.onrender.com/api';
-const initialStats = {
-  totalClients: 0,
-  totalProjects: 0,
-  activeProjects: 0,
-  completedProjects: 0,
-  totalInvoiced: 0,
-  totalPaid: 0,
-  totalExpenses: 0,
-  pendingAmount: 0,
-  netProfit: 0,
-  recentProjects: []
-};
 
 function Dashboard() {
-  const [stats, setStats] = useState(initialStats);
+  const [dashboard, setDashboard] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  const token = localStorage.getItem('token');
-
-  const formatPrice = (amount) => {
-    return `PKR ${Number(amount || 0).toLocaleString()}`;
-  };
-
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-
-    return 'Good evening';
-  };
-
-  const getStatusClass = (status) => {
-    return String(status || 'Planning')
-      .toLowerCase()
-      .replace(/\s+/g, '-');
-  };
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -47,30 +13,34 @@ function Dashboard() {
         setLoading(true);
         setError('');
 
-        const response = await fetch(`${API_URL}/api/dashboard`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          setError('Please login first.');
+          setLoading(false);
+          return;
+        }
+
+        // CORRECT URL:
+        // API_URL already contains /api
+        const response = await fetch(`${API_URL}/dashboard`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
-        );
+        });
 
         const data = await response.json();
 
-        if (response.ok) {
-          setStats({
-            ...initialStats,
-            ...data
-          });
-        } else {
-          setError(
-            data.message ||
-            'Could not load dashboard data.'
-          );
+        if (!response.ok) {
+          throw new Error(data.message || 'Failed to load dashboard');
         }
-      } catch (error) {
-        console.error('Dashboard error:', error);
-        setError('Could not connect to the server.');
+
+        setDashboard(data);
+      } catch (err) {
+        console.error('Dashboard error:', err);
+        setError('Could not connect to the server');
       } finally {
         setLoading(false);
       }
@@ -81,201 +51,120 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="dashboard-page">
-        <div className="page-placeholder">
-          <p>Loading dashboard...</p>
+      <div className="dashboard-container">
+        <h1>Dashboard</h1>
+        <p>Loading dashboard...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="dashboard-container">
+        <h1>Dashboard</h1>
+
+        <div className="error-message">
+          {error}
         </div>
       </div>
     );
   }
 
+  if (!dashboard) {
+    return (
+      <div className="dashboard-container">
+        <h1>Dashboard</h1>
+        <p>No dashboard data available.</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="dashboard-page">
-      <header className="topbar">
-        <div>
-          <p className="welcome">
-            {getGreeting()} 👋
+    <div className="dashboard-container">
+      <h1>Dashboard</h1>
+
+      {/* SUMMARY CARDS */}
+      <div className="dashboard-cards">
+
+        <div className="dashboard-card">
+          <h3>Total Clients</h3>
+          <p>
+            {dashboard.totalClients ?? 0}
           </p>
-
-          <h1>Dashboard</h1>
         </div>
 
-        <button
-          type="button"
-          className="profile-button"
-        >
-          TF
-        </button>
-      </header>
-
-      {error && (
-        <div className="dashboard-error">
-          {error}
-        </div>
-      )}
-
-      <section className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-icon">👥</div>
-
-          <div>
-            <p>Total Clients</p>
-            <h2>{stats.totalClients}</h2>
-          </div>
+        <div className="dashboard-card">
+          <h3>Total Projects</h3>
+          <p>
+            {dashboard.totalProjects ?? 0}
+          </p>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon">📁</div>
-
-          <div>
-            <p>Total Projects</p>
-            <h2>{stats.totalProjects}</h2>
-          </div>
+        <div className="dashboard-card">
+          <h3>Payments Received</h3>
+          <p>
+            PKR {dashboard.totalPayments ?? 0}
+          </p>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon">💰</div>
-
-          <div>
-            <p>Payments Received</p>
-            <h2>{formatPrice(stats.totalPaid)}</h2>
-          </div>
+        <div className="dashboard-card">
+          <h3>Net Profit</h3>
+          <p>
+            PKR {dashboard.netProfit ?? 0}
+          </p>
         </div>
 
-        <div className="stat-card">
-          <div className="stat-icon">📈</div>
+      </div>
 
-          <div>
-            <p>Net Profit</p>
-            <h2
-              className={
-                stats.netProfit < 0
-                  ? 'negative-value'
-                  : 'positive-value'
-              }
-            >
-              {formatPrice(stats.netProfit)}
-            </h2>
-          </div>
-        </div>
-      </section>
+      {/* RECENT PROJECTS */}
+      <div className="recent-projects">
+        <h2>Recent Projects</h2>
 
-      <section className="content-grid">
-        <div className="panel">
-          <div className="panel-header">
-            <div>
-              <h2>Recent Projects</h2>
-              <p>Your latest project activity</p>
-            </div>
+        {dashboard.recentProjects &&
+        dashboard.recentProjects.length > 0 ? (
+          <div className="projects-list">
 
-            <NavLink
-              to="/projects"
-              className="primary-button"
-            >
-              View Projects
-            </NavLink>
-          </div>
+            {dashboard.recentProjects.map((project) => (
+              <div
+                className="project-item"
+                key={project._id}
+              >
+                <div>
+                  <h3>{project.title}</h3>
 
-          {stats.recentProjects.length === 0 ? (
-            <div className="dashboard-empty">
-              <p>
-                No projects yet. Create your first
-                project to see it here.
-              </p>
-            </div>
-          ) : (
-            <div className="dashboard-projects-list">
-              {stats.recentProjects.map((project) => (
-                <div
-                  className="project-item"
-                  key={project._id}
-                >
-                  <div className="project-info">
-                    <div className="project-icon">
-                      {project.title
-                        ?.charAt(0)
-                        .toUpperCase() || 'P'}
-                    </div>
+                  <p>
+                    Client:{' '}
+                    {project.client?.name || 'No client'}
+                  </p>
 
-                    <div>
-                      <h3>{project.title}</h3>
-
-                      <p>
-                        {project.client?.name ||
-                          'Unknown client'}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="project-right">
-                    <span
-                      className={`dashboard-status ${getStatusClass(
-                        project.status
-                      )}`}
-                    >
-                      {project.status || 'Planning'}
-                    </span>
-
-                    <strong>
-                      {formatPrice(project.price)}
-                    </strong>
-                  </div>
+                  <p>
+                    Status:{' '}
+                    {project.status || 'Not specified'}
+                  </p>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
 
-        <div className="panel">
-          <div className="panel-header">
-            <div>
-              <h2>Financial Overview</h2>
-              <p>Your business summary</p>
-            </div>
-          </div>
+                <div>
+                  <p>
+                    Price: PKR {project.price ?? 0}
+                  </p>
 
-          <div className="finance-row">
-            <span>Total Invoiced</span>
-            <strong>
-              {formatPrice(stats.totalInvoiced)}
-            </strong>
-          </div>
+                  {project.deadline && (
+                    <p>
+                      Deadline:{' '}
+                      {new Date(
+                        project.deadline
+                      ).toLocaleDateString()}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
 
-          <div className="finance-row">
-            <span>Payments Received</span>
-            <strong>
-              {formatPrice(stats.totalPaid)}
-            </strong>
           </div>
-
-          <div className="finance-row">
-            <span>Business Expenses</span>
-            <strong className="expense-value">
-              {formatPrice(stats.totalExpenses)}
-            </strong>
-          </div>
-
-          <div className="finance-row">
-            <span>Outstanding Amount</span>
-            <strong className="pending-value">
-              {formatPrice(stats.pendingAmount)}
-            </strong>
-          </div>
-
-          <div className="finance-row pending-row">
-            <span>Net Profit</span>
-            <strong
-              className={
-                stats.netProfit < 0
-                  ? 'negative-value'
-                  : 'positive-value'
-              }
-            >
-              {formatPrice(stats.netProfit)}
-            </strong>
-          </div>
-        </div>
-      </section>
+        ) : (
+          <p>No recent projects found.</p>
+        )}
+      </div>
     </div>
   );
 }
