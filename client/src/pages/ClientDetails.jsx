@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const API_URL = 'https://freelancer-tracker-pn21.onrender.com';
+const API_URL = 'https://freelancer-tracker-pn21.onrender.com/api';
 const SERVER_URL = 'https://freelancer-tracker-pn21.onrender.com';
 
 function ClientDetails() {
