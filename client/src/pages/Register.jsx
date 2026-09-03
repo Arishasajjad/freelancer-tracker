@@ -28,7 +28,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        'https://freelancer-tracker-pn21.onrender.com',
+        'https://freelancer-tracker-pn21.onrender.com/api/auth/register',
         {
           method: 'POST',
           headers: {
@@ -41,9 +41,7 @@ function Register() {
       const data = await response.json();
 
       if (!response.ok) {
-        setError(
-          data.message || 'Registration failed'
-        );
+        setError(data.message || 'Registration failed');
         return;
       }
 
@@ -52,6 +50,8 @@ function Register() {
       navigate('/login');
 
     } catch (error) {
+      console.error('Registration error:', error);
+
       setError(
         'Cannot connect to server. Make sure the backend is running.'
       );
@@ -130,6 +130,7 @@ function Register() {
 
         <p className="login-register-text">
           Already have an account?{' '}
+
           <button
             type="button"
             className="login-register-link"
