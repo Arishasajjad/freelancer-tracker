@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+const API_URL = 'https://freelancer-tracker-pn21.onrender.com/api';
 
 const initialStats = {
   totalClients: 0,
@@ -47,13 +48,19 @@ function Dashboard() {
         setLoading(true);
         setError('');
 
-            const response = await fetch(`${API_URL}/dashboard`,     
-                   {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
+        if (!token) {
+          setError('Please login first.');
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch(`${API_URL}/dashboard`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
           }
-        );
+        });
 
         const data = await response.json();
 
@@ -77,7 +84,7 @@ function Dashboard() {
     };
 
     fetchDashboard();
-  }, []);
+  }, [token]);
 
   if (loading) {
     return (
@@ -91,6 +98,7 @@ function Dashboard() {
 
   return (
     <div className="dashboard-page">
+
       <header className="topbar">
         <div>
           <p className="welcome">
@@ -115,6 +123,7 @@ function Dashboard() {
       )}
 
       <section className="stats-grid">
+
         <div className="stat-card">
           <div className="stat-icon">👥</div>
 
@@ -147,6 +156,7 @@ function Dashboard() {
 
           <div>
             <p>Net Profit</p>
+
             <h2
               className={
                 stats.netProfit < 0
@@ -158,11 +168,15 @@ function Dashboard() {
             </h2>
           </div>
         </div>
+
       </section>
 
       <section className="content-grid">
+
         <div className="panel">
+
           <div className="panel-header">
+
             <div>
               <h2>Recent Projects</h2>
               <p>Your latest project activity</p>
@@ -174,23 +188,31 @@ function Dashboard() {
             >
               View Projects
             </NavLink>
+
           </div>
 
           {stats.recentProjects.length === 0 ? (
+
             <div className="dashboard-empty">
               <p>
                 No projects yet. Create your first
                 project to see it here.
               </p>
             </div>
+
           ) : (
+
             <div className="dashboard-projects-list">
+
               {stats.recentProjects.map((project) => (
+
                 <div
                   className="project-item"
                   key={project._id}
                 >
+
                   <div className="project-info">
+
                     <div className="project-icon">
                       {project.title
                         ?.charAt(0)
@@ -205,9 +227,11 @@ function Dashboard() {
                           'Unknown client'}
                       </p>
                     </div>
+
                   </div>
 
                   <div className="project-right">
+
                     <span
                       className={`dashboard-status ${getStatusClass(
                         project.status
@@ -219,23 +243,33 @@ function Dashboard() {
                     <strong>
                       {formatPrice(project.price)}
                     </strong>
+
                   </div>
+
                 </div>
+
               ))}
+
             </div>
+
           )}
+
         </div>
 
         <div className="panel">
+
           <div className="panel-header">
+
             <div>
               <h2>Financial Overview</h2>
               <p>Your business summary</p>
             </div>
+
           </div>
 
           <div className="finance-row">
             <span>Total Invoiced</span>
+
             <strong>
               {formatPrice(stats.totalInvoiced)}
             </strong>
@@ -243,6 +277,7 @@ function Dashboard() {
 
           <div className="finance-row">
             <span>Payments Received</span>
+
             <strong>
               {formatPrice(stats.totalPaid)}
             </strong>
@@ -250,6 +285,7 @@ function Dashboard() {
 
           <div className="finance-row">
             <span>Business Expenses</span>
+
             <strong className="expense-value">
               {formatPrice(stats.totalExpenses)}
             </strong>
@@ -257,6 +293,7 @@ function Dashboard() {
 
           <div className="finance-row">
             <span>Outstanding Amount</span>
+
             <strong className="pending-value">
               {formatPrice(stats.pendingAmount)}
             </strong>
@@ -264,6 +301,7 @@ function Dashboard() {
 
           <div className="finance-row pending-row">
             <span>Net Profit</span>
+
             <strong
               className={
                 stats.netProfit < 0
@@ -274,8 +312,11 @@ function Dashboard() {
               {formatPrice(stats.netProfit)}
             </strong>
           </div>
+
         </div>
+
       </section>
+
     </div>
   );
 }
